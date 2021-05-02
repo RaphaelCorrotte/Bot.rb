@@ -21,4 +21,4 @@ module DiscordBot::Commands
 end
 
 $discord_bot = DiscordBot::Client.new(YAML.load(File.read("src/private/data.yml"))[:token])
-$client = $game_box.client
+$client = $discord_bot.client
