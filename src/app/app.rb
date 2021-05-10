@@ -16,9 +16,6 @@ module DiscordBot
   FILE_LOGGER = Logger.new(:file)
 end
 
-module DiscordBot::Commands
-  include DiscordBot::Command
-end
 
 $discord_bot = DiscordBot::Client.new(YAML.load(File.read("src/private/data.yml"))[:token])
-$client = $game_box.client
+$client = $discord_bot.client
