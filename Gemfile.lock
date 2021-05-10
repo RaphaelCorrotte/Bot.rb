@@ -23,6 +23,7 @@ GEM
     netrc (0.11.0)
     opus-ruby (1.0.1)
       ffi
+    rake (13.0.3)
     rest-client (2.1.0-x64-mingw32)
       ffi (~> 1.9)
       http-accept (>= 1.7.0, < 2.0)
@@ -44,6 +45,7 @@ PLATFORMS
 DEPENDENCIES
   discordrb (~> 3.4)
   json (~> 2.5, >= 2.5.1)
+  rake (~> 13.0, >= 13.0.3)
   yaml (~> 0.1.1)
 
 BUNDLED WITH
