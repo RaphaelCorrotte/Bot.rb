@@ -1,2 +1,4 @@
 src/private
 src/logs
+.idea
+.vscode
