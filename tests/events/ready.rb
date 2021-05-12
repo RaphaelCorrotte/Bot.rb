@@ -1,4 +1,4 @@
-require_relative "../app/app"
+require_relative "../../lib/bot"
 
 module DiscordBot
   module Events

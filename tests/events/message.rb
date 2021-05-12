@@ -1,4 +1,4 @@
-require_relative "../app/app"
+require_relative "../../lib/bot"
 
 module DiscordBot
   module Events
@@ -12,7 +12,7 @@ module DiscordBot
             command = DiscordBot::Utils::get_command(name)
             command.run.call(event, { :args => args })
           rescue => e
-            CONSOLE_LOGGER.error("Error running #{name}: #{e.message}")
+            CONSOLE_LOGGER.error("Error running #{name}: #{e.full_message}")
             FILE_LOGGER.write(e.message, :errors)
           else
             CONSOLE_LOGGER.info("Command #{name} executed")

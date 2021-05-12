@@ -1,4 +1,5 @@
-src/private
-src/logs
+lib/src/private
+lib/src/logs
+tests
 .idea
 .vscode

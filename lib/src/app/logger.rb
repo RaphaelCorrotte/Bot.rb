@@ -2,7 +2,7 @@ module DiscordBot
   class Logger
     attr_reader :mode
     attr_reader :targets, :file
-    def initialize(mode = :console, targets = { :errors => "src/logs/errors.txt", :logs => "src/logs/logs.txt" })
+    def initialize(mode = :console, targets = { :errors => "lib/src/logs/errors.txt", :logs => "lib/src/logs/logs.txt" })
       @mode = mode
       @targets = targets if @mode == :file
     end

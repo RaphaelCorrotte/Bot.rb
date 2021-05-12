@@ -1,4 +1,4 @@
-module GameBox
+module DiscordBot
   class Command
     attr_reader :run
     attr_accessor :props
@@ -63,9 +63,9 @@ module GameBox
       if @required_permissions == :default then @required_permissions = [] end
 
       if @category == :default or !@category
-        Dir.entries("src/commands/").each do |dir|
+        Dir.entries($client.manager.commands_directory).each do |dir|
           next if dir == "." || dir == ".."
-          if Dir.entries("src/commands/#{dir}").include?("#{@name}.rb")
+          if Dir.entries("#{$client.manager.commands_directory}/#{dir}").include?("#{@name}.rb")
             @category = dir.upcase
             break
           end

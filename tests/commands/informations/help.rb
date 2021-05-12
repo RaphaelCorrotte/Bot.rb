@@ -1,9 +1,9 @@
-require_relative "../../app/app"
+require_relative "../../../lib/bot"
 
-module GameBox
+module DiscordBot
   module Commands
     def help
-      GameBox::Command.new({
+      DiscordBot::Command.new({
                              :name => :help,
                              :aliases => "h",
                              :description => "Affiche le panel d'aide",
@@ -13,8 +13,8 @@ module GameBox
                              :required_bot_permissions => :default,
                              :category => :default
                            }) do |event, tools|
-        if GameBox::Utils::get_command((tools[:args][0]).to_s, { :boolean => true })
-          command = GameBox::Utils::get_command(tools[:args][0])
+        if DiscordBot::Utils::get_command((tools[:args][0]).to_s, { :boolean => true })
+          command = DiscordBot::Utils::get_command(tools[:args][0])
           command_aliases = if command.aliases.class == Array
                               if command.aliases.empty? false; else
                                 (command.aliases.map { |a| "#{$client.config[:prefix]}#{a}" }).join("\n")
@@ -69,15 +69,15 @@ module GameBox
             }
           ]
           event.channel.send_embed do |embed|
-            GameBox::Utils::build_embed(embed)
-            GameBox::Utils::add_fields(embed, fields, true)
+            DiscordBot::Utils::build_embed(embed)
+            DiscordBot::Utils::add_fields(embed, fields, true)
           end
-        elsif tools[:args][0] and not GameBox::Utils::get_command(tools[:args][0], { :boolean => true })
+        elsif tools[:args][0] and not DiscordBot::Utils::get_command(tools[:args][0], { :boolean => true })
           event.respond "There isn't any command found with #{tools[:args][0]}"
         else
           event.channel.send_embed do |embed|
-            GameBox::Utils::build_embed(embed)
-            embed.description = $client.commands.map { |cmd| cmd.name }.join("\n")
+            DiscordBot::Utils::build_embed(embed)
+            embed.description = $client.commands.map { |cmd| cmd }.join("\n")
           end
         end
       end

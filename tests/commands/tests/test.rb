@@ -1,9 +1,9 @@
-require_relative "../../app/app"
+require_relative "../../../lib/bot"
 
 module DiscordBot
   module Commands
     def test
-      Discordbot::Command.new({ :name => "test" }) do |event, tools|
+      DiscordBot::Command.new({ :name => "test" }) do |event, tools|
         event.respond("Test!")
       end
     end

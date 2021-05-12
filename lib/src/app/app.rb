@@ -7,6 +7,7 @@ require_relative "error"
 require_relative "command_handler"
 require_relative "event_handler"
 require_relative "command"
+require_relative "manager"
 
 module DiscordBot
   include Discordrb
@@ -17,5 +18,11 @@ module DiscordBot
 end
 
 
-$discord_bot = DiscordBot::Client.new(YAML.load(File.read("src/private/data.yml"))[:token])
+$discord_bot = DiscordBot::Client.new(YAML.load(File.read("lib/src/private/data.yml"))[:token])
 $client = $discord_bot.client
+
+$client.manager = DiscordBot::Manager.new({
+                                           :commands_directory => "tests/commands",
+                                           :events_directory => "tests/events"
+                                         })
+$client.manager.load
