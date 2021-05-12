@@ -1,4 +1,4 @@
-module DiscordBot
+module GameBox
   class Command
     attr_reader :run
     attr_accessor :props
@@ -13,16 +13,22 @@ module DiscordBot
     end
 
     private def load_attributes
-      Command.attr_accessor :name, :aliases, :description, :args, :example, :required_permissions, :required_bot_permissions, :category
+      Command.attr_accessor :name, :aliases, :description, :args, :use_example, :required_permissions, :required_bot_permissions, :category
       if @props[:name] then @name = @props[:name] end
+
+      @props[:aliases] ||= :default
       if @props[:aliases]
         if @props[:aliases].class == Array or @props[:aliases].class == String
           @aliases = @props[:aliases]
+        elsif @aliases == :default
+          @aliases = []
+        else
+          @aliases = []
         end
       end
       if @props[:description] then @description = @props[:description].to_s end
       if @props[:args] then @args = @props[:args].to_a end
-      if @props[:example] then @example = @props[:example] end
+      if @props[:use_example] then @use_example = @props[:use_example] end
 
       if @props[:required_permissions] == :default
         @required_permissions = []
@@ -53,25 +59,26 @@ module DiscordBot
 
       if @props[:category] then @category = @props[:category] end
 
-      if @example == :default then @example = "#{$client.config[:prefix]}#{@name}" end
+      if @use_example == :default then @use_example = "#{$client.config[:prefix]}#{@name}" end
       if @required_permissions == :default then @required_permissions = [] end
 
       if @category == :default or !@category
-        Dir["src/commands"].each do |dir|
-          if dir.include?("#{@name}.rb")
-            @category = dir
+        Dir.entries("src/commands/").each do |dir|
+          next if dir == "." || dir == ".."
+          if Dir.entries("src/commands/#{dir}").include?("#{@name}.rb")
+            @category = dir.upcase
             break
           end
         end
       end
       Hash[
         :name => @name,
-        :aliases => @name,
+        :aliases => @aliases,
         :description => @description,
         :args => @args,
         :required_permissions => @required_permissions,
         :required_bot_permissions => @required_bot_permissions,
-        :example => @example,
+        :use_example => @use_example,
         :category => @category
       ]
     end
